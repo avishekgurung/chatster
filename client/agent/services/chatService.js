@@ -2,14 +2,14 @@
  * Created by avishek on 6/7/17.
  */
 
-App.service('ChatService', ['$rootScope', '$timeout', '$http', '$q', '$window', function( $rootScope, $timeout, $http, $q, $window) {
+App.service('ChatService', ['$rootScope', '$http', function( $rootScope, $http) {
     var ChatService = {};
-    var User = {};
+    var Guest = {};
     /*User = {
         "123": {
             name: "Mic Folly",
             pic: "./pic.jpg",
-            chatDisplay: [{
+            conversation: [{
                 "type": "him",
                 "text": ["Hello", "How are you mate"],
                 "epoch": 1495547489403
@@ -39,14 +39,14 @@ App.service('ChatService', ['$rootScope', '$timeout', '$http', '$q', '$window', 
     var socket;
 
     //Opening socket connections
-    function open(userId, peerId) {
-        if(!userId) {
+    function open(agentId) {
+        if(!agentId) {
             return;
         }
-        socket = io.connect('', { query : 'userId=' + userId + '&peerId=' + peerId});
+        socket = io.connect('', { query : 'userId=' + agentId });
         socket.on('connect', function() {
             console.log('SOCKET OPENED');
-            socket.on(userId, function(message) {
+            socket.on(agentId, function(message) {
                 $rootScope.$apply(function(){
                     if(message.name) {
                         receiveFirst(message.from, message.to, message.text, message.name, message.pic);
@@ -59,34 +59,24 @@ App.service('ChatService', ['$rootScope', '$timeout', '$http', '$q', '$window', 
             })
 
             //populate chat list too
-            if(Object.keys(ChatService.User).length === 0) {
+            if(Object.keys(ChatService.Guest).length === 0) {
                 ChatService.makeChatDict();
             }
-
-            if(userId.indexOf('JUVENIK') === -1) {
-                $rootScope.isSupport = true;
-            }
-            else {
-                $rootScope.isGuest = true;
-            }
-
         })
     }
 
     //when user sends or receives
     function makeHeader(from, text, guestId) {
-        //this way of identifying if a user is a support or guest is temporary, we should attach flag to rootScope
-        var isSupport = $window.localStorage.getItem('token');
+        var isSupport = !!$rootScope.agent;
         if(isSupport) {
-            //User[from].header = {type : from.indexOf('JUVENIK') !== -1 ? 'him' : 'you', text : text, epoch : new Date().getTime()}
             var header =  {
                 guestId : guestId,
                 type : from.indexOf('JUVENIK') !== -1 ? 'him' : 'you',
                 text : text,
                 epoch : new Date().getTime()
             }
-            User[guestId].header = header;
-            User[guestId].updated = true;
+            Guest[guestId].header = header;
+            Guest[guestId].updated = true;
         }
     }
 
@@ -104,13 +94,13 @@ App.service('ChatService', ['$rootScope', '$timeout', '$http', '$q', '$window', 
 
     //First time receiving a message
     function receiveFirst (from, to, text, name, pic) {
-        if(!User[from]) {
-            var chatDisplay = [];
-            User[from] = {
+        if(!Guest[from]) {
+            var conversation = [];
+            Guest[from] = {
                 _id : from,
                 name : name,
                 pic : pic,
-                chatDisplay : chatDisplay,
+                conversation : conversation,
                 sendFirst : false
             }
         }
@@ -121,68 +111,29 @@ App.service('ChatService', ['$rootScope', '$timeout', '$http', '$q', '$window', 
     //Normal receive
     function receive(from, text) {
         //case when support refreshes the browser but the online guest still pings
-        if($rootScope.isSupport && User[from] && User[from].chatDisplay.length === 0 && User[from].header && User[from].header.guestId) {
-            getChatDetails(from).then(function(conversation) {
-                User[from].chatDisplay = conversation;
-                //insertInChatDisplay(from, text, 'him');
+        if(Guest[from] && Guest[from].conversation.length === 0 && Guest[from].header && Guest[from].header.guestId) {
+            getChatDetails(from).then(function(items) {
+                Guest[from].conversation = items;
             })
         }
         else {
-            insertInChatDisplay(from, text, 'him');
+            var conversation = Guest[from]['conversation'];
+            Utility.addConversation(conversation, text, 'him');
         }
-
-    }
-
-    //First time sending message
-    function sendFirst(to, text, hisName, hisPic) {
-        var _id = to;
-        var message = {"type":"you", "text" : [text], "epoch" : Date.now()}
-        if(User[_id]) { //first message while replying
-            var user = User[_id];
-            var chatDisplay = user['chatDisplay'];
-            user.sendFirst = false;
-            chatDisplay.push(message);
-        }
-        else { //initiating a chat
-            User[to] = {
-                _id : to,
-                name : hisName,
-                pic : hisPic,
-                chatDisplay : [
-                    message
-                ],
-                sendFirst : false
-            }
-        }
-        makeHeader($rootScope.user._id, text, to);
-        emit({from : $rootScope.user._id, to : to, text : text, name : $rootScope.user.name, pic : $rootScope.user.pic})
     }
 
     //normal send
     function send(to, text) {
-        insertInChatDisplay(to, text, 'you');
-        makeHeader($rootScope.user._id, text, to);
-        emit({to : to, from : $rootScope.user._id, text : text});
+        var conversation = Guest[to]['conversation'];
+        Utility.addConversation(conversation, text, 'you');
+        makeHeader($rootScope.agent._id, text, to);
+        emit({to : to, from : $rootScope.agent._id, text : text});
     }
 
-    //inserting into chat display based on messages
-    function insertInChatDisplay(id, text, type) {
-        var chatDisplay = User[id]['chatDisplay'];
-        var now = Date.now();
-        var lm = getLastMessage(id,type);
-        var lastDate = lm ? lm.epoch : null;
-        if(lastDate &&  ( now - lastDate < 5000)) { //instant sending case
-            lm.text.push(text);
-            lm.epoch = new Date().getTime();
-        }
-        else {
-            chatDisplay.push({type:type, text:[text], epoch:now});
-        }
-    }
 
     function getChatDetails(guestId) {
         if(!guestId) return;
-        return $http.get('/api/chatDetails?userId=' + $rootScope.user._id + '&guestId=' + guestId).then(function(res) {
+        return $http.get('/api/chatDetails?userId=' + $rootScope.agent._id + '&guestId=' + guestId).then(function(res) {
             var arr = res.data.chats;
             var result = [];
             var index = 0;
@@ -198,7 +149,6 @@ App.service('ChatService', ['$rootScope', '$timeout', '$http', '$q', '$window', 
                     if(current.epoch - last.epoch < 5000) {
                         last.epoch = current.epoch;
                         last.message = last.message + delimitter + current.message;
-                        //last.date = current.date;
                     }
                     else {
                         last = current;
@@ -234,22 +184,12 @@ App.service('ChatService', ['$rootScope', '$timeout', '$http', '$q', '$window', 
                 }
             }
 
-            //$scope.conversation = conversation;
-            //ChatService.User[guestId].chatDisplay = conversation;
             return conversation;
 
         }, function(err) {
             console.log(err);
             return false;
         })
-    }
-
-    //fetching last message in a conversation
-    function getLastMessage(id, type) {
-        var chatDisplay = User[id]["chatDisplay"];
-        var lastMessage = chatDisplay[chatDisplay.length-1];
-        if(lastMessage && lastMessage.type === type) return lastMessage;
-        return null;
     }
 
 
@@ -260,8 +200,8 @@ App.service('ChatService', ['$rootScope', '$timeout', '$http', '$q', '$window', 
 
         if(params === 'all') {
             ids = [];
-            for (var key in User) {
-                if(User[key].updated) ids.push(key);
+            for (var key in Guest) {
+                if(Guest[key].updated) ids.push(key);
             }
         }
         else if(params.constructor().toLowerCase().indexOf('array') !== -1) {
@@ -273,13 +213,13 @@ App.service('ChatService', ['$rootScope', '$timeout', '$http', '$q', '$window', 
 
         for ( var i=0; i < ids.length; i++ ) {
             var id = ids[i];
-            var user = User[id];
-            var chatDisplay = user.chatDisplay;
-            var lastMessage = chatDisplay[chatDisplay.length-1];
+            var guest = Guest[id];
+            var conversation = guest.conversation;
+            var lastMessage = conversation[conversation.length-1];
             if(lastMessage) {
                 var text = lastMessage.text;
                 var lastText = text[text.length-1];
-                var from = $rootScope.user._id;;
+                var from = $rootScope.agent._id;;
                 var to = id;
                 if(lastMessage.type === 'him') {
                     var temp = to;
@@ -292,40 +232,21 @@ App.service('ChatService', ['$rootScope', '$timeout', '$http', '$q', '$window', 
         return chatList;
     }
 
-
-    function closeCommunication(chatList, callback) {
-        callback();
-        /*if(Object.prototype.toString.call( chatList ) === '[object Array]' && chatList.length) {
-            $http.post('/api/closecommunication',
-                { chatList : chatList},
-                { headers : {"x-access-token" : $window.localStorage.getItem('token')}}
-                ).then(function() {
-                if(callback)
-                    callback();
-                return true;
-            });
-        }
-        else {
-            if(callback)
-                callback();
-        }*/
-    }
-
     function makeChatDict() {
-        var userId = $rootScope.user._id;
-        if(!userId) return;
-        $http.get('/api/chatList?userId=' + userId).then(function(res) {
+        var agentId = $rootScope.agent._id;
+        if(!agentId) return;
+        $http.get('/api/chatList?userId=' + agentId).then(function(res) {
             var items = res.data.chatList;
             for(var i=0; i < items.length; i++) {
                 var item = items[i];
                 var id = item.from;
-                if(item.to.indexOf('JUVENIK') !== -1)
+                if(item.to.indexOf('JUVENIK') !== -1) {
                     id = item.to;
-                User[id] = {
+                }
+                Guest[id] = {
                     name: "NA",
                     pic: "./pic.jpg",
-                    chatDisplay: [],
-                    sendFirst: true,
+                    conversation: [],
                     updated : false,
                     header : {
                         guestId : id,
@@ -340,32 +261,14 @@ App.service('ChatService', ['$rootScope', '$timeout', '$http', '$q', '$window', 
         });
     }
 
-    //https://gist.github.com/981746/3b6050052ffafef0b4df
-    $window.onbeforeunload = function (e) {
-        var chatList = createChatList("all");
-        //console.log(JSON.stringify(chatList));
-        //$window.alert("Saving all the chats");
-        //confirm('Hi');
-        ChatService.closeCommunication(chatList, function() {
-
-            console.log('HO GAYA');
-        });
-        //console.log(e);
-        //return 'leave this page';
-        /*e.preventDefault();
-        e.stopImmediatePropagation();*/
-    };
-
     ChatService = {
-        User : User,
+        Guest : Guest,
         receiveFirst : receiveFirst,
         receive : receive,
-        sendFirst : sendFirst,
         send : send,
         open : open,
         close : close,
         createChatList : createChatList,
-        closeCommunication : closeCommunication,
         makeChatDict : makeChatDict,
         getChatDetails : getChatDetails
     }

@@ -7,8 +7,6 @@ App.run(['$rootScope', '$location', 'Auth', '$http', 'AuthToken', 'ChatService',
     var pageReload = true;
     var path = $location.path();
 
-    if(path === '/guest') return;
-
     $rootScope.$on('$routeChangeStart', function (event) {
         if(pageReload) {
             pageReload = false;
@@ -29,7 +27,7 @@ App.run(['$rootScope', '$location', 'Auth', '$http', 'AuthToken', 'ChatService',
         } else {
             Auth.getUser()
                 .then(function(res) {
-                    $rootScope.user = res.data.user;
+                    $rootScope.agent = res.data.user;
                     ChatService.open(res.data.user._id);
 
                 }, function(err) {
@@ -45,34 +43,4 @@ App.run(['$rootScope', '$location', 'Auth', '$http', 'AuthToken', 'ChatService',
         }
     }
 
-}])
-
-
-/*App.directive('test', function() {
-    return  {
-        templateUrl : "app/test.html"
-    }
-});
-
-
-var chatContainer = document.getElementById("avishek_gurung");
-function headerClicked (event){
-    var target = event.target;
-    var targetClass = target.getAttribute("class");
-    var chatHead = event.currentTarget;
-    var chatBox = chatHead.parentElement;
-    if(targetClass === 'chat-close-box') {
-        chatContainer.removeChild(chatBox);
-    }
-    else {
-        var chatBoxClass = chatBox.getAttribute("class");
-        if(chatBoxClass.indexOf("chat-box-minz") !== -1) { //already minimize
-            if(targetClass !== "chat-minz-box") {
-                chatBox.setAttribute("class", "chat-box chat-box-maxz");
-            }
-        }
-        else {
-            chatBox.setAttribute("class","chat-box chat-box-minz");
-        }
-    }
-}*/
+}]);

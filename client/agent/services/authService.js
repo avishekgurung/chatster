@@ -36,7 +36,7 @@ App.factory('AuthToken', ['$window', function ($window) {
                 password : password
             }).success(function(data) {
                 AuthToken.setToken(data.token);
-                $rootScope.user = data.user;
+                $rootScope.agent = data.user;
                 ChatService.open(data.user._id);
                 return 1;
             })
@@ -45,12 +45,8 @@ App.factory('AuthToken', ['$window', function ($window) {
         //logging out
         authFactory.logout = function() {
             /*ChatService.closeCommunication("all");*/
-            var chatList = ChatService.createChatList("all");
-            ChatService.closeCommunication(chatList, function() {
-                console.log('DONE');
-                ChatService.close();
-                AuthToken.setToken();
-            });
+            ChatService.close();
+            AuthToken.setToken();
             /*ChatService.close();
             AuthToken.setToken();*/
         }

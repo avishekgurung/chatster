@@ -30,7 +30,7 @@ App.directive("chatBox", ['GuestService', '$rootScope', function(GuestService) {
             scope.closeCommunication = function() {
                 var chatDisplay = scope.user.chatDisplay;
                 var lastMessage = chatDisplay[chatDisplay.length-1];
-                var from = $rootScope.user._id;
+                var from = $rootScope.agent._id;
                 var to = scope.obj._id;
                 var text = lastMessage.text;
                 if(lastMessage.type === 'him') {
