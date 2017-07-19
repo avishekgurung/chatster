@@ -1,0 +1,83 @@
+<div>
+    <script>
+        //To be used generally, include it in a file when deploying
+        var chatContainer = document.getElementById("avishek_gurung");
+        function headerClicked (event){
+            var target = event.target;
+            var targetClass = target.getAttribute("class");
+            var chatHead = event.currentTarget;
+            var chatBox = chatHead.parentElement;
+            if(targetClass === 'chat-close-box') {
+                chatContainer.removeChild(chatBox);
+            }
+            else {
+                var chatBoxClass = chatBox.getAttribute("class");
+                if(chatBoxClass.indexOf("chat-box-minz") !== -1) { //already minimize
+                    if(targetClass !== "chat-minz-box") {
+                        chatBox.setAttribute("class", "chat-box chat-box-maxz");
+                    }
+                }
+                else {
+                    chatBox.setAttribute("class","chat-box chat-box-minz");
+                }
+            }
+        }
+
+        window.onbeforeunload = function (e) {
+            alert('asd');
+            confirm('asd');
+            e = e || window.event;
+
+            // For IE and Firefox prior to version 4
+            if (e) {
+                e.returnValue = 'Sure?';
+            }
+            console.log('Native JS')
+            // For Safari
+            return 'Sure?';
+        };
+
+    </script>
+    <div class="page-header">
+        <h1>Home</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+            Welcome {{user.name}}
+        </div>
+        <a href="/agent/profile">Profile</a>
+        <span class="pull-right" ng-click='logout()'>Logout</span>
+    </div>
+
+    <div style="float: left">
+        <div style="cursor: pointer" ng-repeat="chat in chatList | orderBy:'epoch':true" ng-click="getChatDetails(chat.guestId)">
+            {{chat.epoch}} - {{chat.text}} - {{chat.type}} - <button ng-click="getChatDetails(chat.guestId)">View</button>
+        </div>
+    </div>
+
+    <br><br><br><br><br><br>
+
+    <div ng-if="conversation" style="">
+        <div ng-repeat="item in conversation">
+            <div>{{item}}</div> <br>
+        </div>
+
+        <div class="">
+            <div>
+                <input ng-model="homeCtrl.text" ng-keypress="change($event)"> {{homeCtrl.text}}
+                <!--<input type="text" placeholder="Send a message" class="" ng-keypress="change($event)" ng-model="line">-->
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+    <!--<div>
+        <div class="chat-container" id="avishek_gurung">
+            <chat-box ng-repeat="(key, value) in chatBoxList" obj=value></chat-box>
+        </div>
+    </div>-->
+</div>

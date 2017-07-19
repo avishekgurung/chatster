@@ -1,0 +1,29 @@
+<div class="chat-display">
+    <div ng-repeat="message in conversation">
+        <div class="chat-you chat-talk-bubble chat-tri-right chat-round chat-right-top" ng-if="message.type === 'you'">
+            <div class="chat-talktext">
+                <p ng-repeat="m in message.text track by $index">
+                    {{m}}
+                </p>
+            </div>
+        </div>
+
+        <div style="clear: both" ng-if="message.type === 'him'">
+            <div style="float: left">
+                <img src="./pic.jpg" class="chat-his-pic">
+            </div>
+            <div style="float: left">
+                <div class="chat-him chat-talk-bubble chat-tri-right chat-round chat-left-top">
+                    <div class="chat-talktext">
+                        <p ng-repeat="m in message.text track by $index">
+                            {{m}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="chat-date">
+            {{message.date}}
+        </div>
+    </div>
+</div>

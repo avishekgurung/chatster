@@ -1,0 +1,33 @@
+<div>
+    <div class="page-header">
+        <h1>Register</h1>
+        <a class="pull-right" href="/agent/login">Login</a>
+    </div>
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+            <form ng-show="!serverSucces" method="post" ng-submit="register()">
+                Name : <input class="form-control" ng-model="user.name" ng-keyup="error.name=false">
+                <span ng-if="error.name">Invalid name</span>
+                <br>
+
+
+                Email : <input class="form-control" ng-model="user.email" ng-keyup="error.email=false">
+                <span ng-if="error.email">Invalid email</span>
+                <br>
+
+                Password : <input class="form-control" ng-model="user.password" type="password" ng-keyup="error.password=false">
+                <span ng-if="error.password">Invalid password</span>
+                <br>
+
+                <button type="submit" class="btn btn-success">Signup</button>
+            </form>
+            <div ng-if="serverErr">
+                {{serverErr}}
+            </div>
+            <div ng-if="serverSucces">
+                <div>{{serverSucces}}</div>
+                Please <a href="/login">log in</a> into your account.
+            </div>
+        </div>
+    </div>
+</div>

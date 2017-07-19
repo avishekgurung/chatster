@@ -1,0 +1,198 @@
+/*
+Pending: Replace 'chat' by the app name and keep all the css classes inside that unique ID defined in chat-container
+so that the css does not over ridden by host app and our CSS does not override the host css.
+*/
+
+.chat-container { /*incase we change the module to iframe*/
+    width: 100%;
+    margin: 0;
+    position: fixed;
+    bottom: 0;
+    font-family: arial,sans-serif;
+    margin-bottom: 0px;
+    z-index: 2147483647;
+    overflow: hidden;
+    height: 23.5em;
+}
+
+.chat-box {
+    font-size:14px;
+    max-height: 26.7em;
+    width: 18.8em;
+    float: right;
+    margin: 0.2em;
+    background-color: white;
+    transition: all 0.1s linear;
+}
+
+.chat-head, .chat-tool-bar {
+    min-height: 2.4em;
+}
+
+.chat-tool-bar, .chat-display {
+    background-color: rgba(0,0,0,.1);
+    box-shadow: .1em .1em .2em #888888
+}
+
+.chat-head {
+    color: #fff;
+    background-color: #404040; /* #5cab20 for active*/
+    cursor: pointer;
+    padding: .3em .8em;
+}
+
+.chat-head-content {
+    float: left;
+}
+
+.chat-user-name {
+    font-size: .95em;
+    width: 13em; /*width, overflow and white space are used for text-overflow to work*/
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.chat-user-time {
+    font-size: .7em;
+}
+
+.chat-minz-box, .chat-close-box {
+    float: right;
+    font-weight: bold;
+    padding: .3em .5em;
+    position: relative;
+    top: .2em;
+}
+
+.chat-minz-box:hover, .chat-close-box:hover {
+    background-color: #797979;
+}
+
+.chat-close-box {
+    margin-left: .4em;
+}
+
+.chat-display {
+    color: #262626;
+    height: 19.5em;
+    overflow-y: scroll;
+    font-family: arial,sans-serif;
+    font-size: 13px;
+    line-height: 16px
+}
+
+.chat-you {
+    float: right;
+    background-color: white;
+    clear: both;
+    margin: 5px 25px;
+}
+
+.chat-him {
+    background-color: #BEBEBE;
+    float: left;
+    clear: both;
+    margin: 5px 4px;
+}
+
+.chat-talktext{
+    padding: .7em;
+    text-align: left;
+    line-height: 1.5em;
+    overflow: hidden;
+}
+
+.chat-talktext p{
+    -webkit-margin-before: 0em;
+    -webkit-margin-after: 0em;
+}
+
+.chat-talk-bubble {
+    display: inline-block;
+    position: relative;
+    max-width: 183px;
+    height: auto;
+}
+
+.chat-tri-right.chat-right-top:after{
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: auto;
+    right: -6px;
+    top: 0px;
+    bottom: auto;
+    border: 8px solid;
+    border-color: white transparent transparent transparent;
+}
+
+.chat-tri-right.chat-left-top:after{
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: -6px;
+    right: auto;
+    top: 0px;
+    bottom: auto;
+    border: 8px solid;
+    border-color: #BEBEBE transparent transparent transparent;
+}
+
+.chat-round{
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+
+}
+
+.chat-his-pic {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+.chat-date {
+    clear: both;
+    text-align: center;
+    ont-family: arial,sans-serif;
+    font-size: 11px;
+    color: rgba(0,0,0,.54);
+}
+
+.chat-entry {
+    width: 100%;
+}
+
+.chat-text {
+    width: 88%;
+    display: block;
+    height: 2em;
+    margin: .5em 1em;
+    border-style: none;
+}
+
+.chat-text:focus {
+    outline: none;
+}
+
+.chat-box-minz {
+    position: relative;
+    bottom: -23.5em;
+}
+
+.chat-box-maxz {
+    position: relative;
+    bottom: 0em;
+}
+
+
+
+/*
+transition: background 0.5s linear;
+-moz-transition: background 0.5s linear; !* Firefox 4 *!
+-webkit-transition: background 0.5s linear; !* Safari and Chrome *!
+-o-transition: background 0.5s linear; !* Opera *!
+-ms-transition: background 0.5s linear; !* Explorer 10 *!*/
