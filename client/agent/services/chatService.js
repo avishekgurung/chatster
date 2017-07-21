@@ -2,38 +2,9 @@
  * Created by avishek on 6/7/17.
  */
 
-App.service('ChatService', ['$rootScope', '$http', function( $rootScope, $http) {
+App.service('ChatService', ['$rootScope', '$http','$timeout', function( $rootScope, $http, $timeout) {
     var ChatService = {};
     var Guest = {};
-    /*User = {
-        "123": {
-            name: "Mic Folly",
-            pic: "./pic.jpg",
-            conversation: [{
-                "type": "him",
-                "text": ["Hello", "How are you mate"],
-                "epoch": 1495547489403
-            },
-                {
-                    "type": "him",
-                    "text": ["I had seen you."],
-                    "epoch": 1495706933847
-                },
-                {
-                    "type": "you",
-                    "text": ["Oh really?"],
-                    "epoch": 1495709598372
-                },
-            ],
-            sendFirst: true,
-            header: {
-                "guestId": "1234",
-                "type": "you",
-                "text": "Oh really?",
-                "epoch": 1495709598372
-            } //last text
-        }
-    }*/
 
     //Socket implementations
     var socket;
@@ -48,13 +19,15 @@ App.service('ChatService', ['$rootScope', '$http', function( $rootScope, $http) 
             console.log('SOCKET OPENED');
             socket.on(agentId, function(message) {
                 $rootScope.$apply(function(){
+                    var selected = false;
                     if(message.name) {
                         receiveFirst(message.from, message.to, message.text, message.name, message.pic);
+                        selected = true;
                     }
                     else {
                         receive(message.from, message.text);
                     }
-                    makeHeader(message.from, message.text, message.from);
+                    makeHeader(message.from, message.text, message.from, selected);
                 })
             })
 
@@ -66,14 +39,15 @@ App.service('ChatService', ['$rootScope', '$http', function( $rootScope, $http) 
     }
 
     //when user sends or receives
-    function makeHeader(from, text, guestId) {
+    function makeHeader(from, text, guestId, selected) {
         var isSupport = !!$rootScope.agent;
         if(isSupport) {
             var header =  {
                 guestId : guestId,
                 type : from.indexOf('JUVENIK') !== -1 ? 'him' : 'you',
                 text : text,
-                epoch : new Date().getTime()
+                epoch : new Date().getTime(),
+                selected: selected
             }
             Guest[guestId].header = header;
             Guest[guestId].updated = true;
@@ -126,7 +100,7 @@ App.service('ChatService', ['$rootScope', '$http', function( $rootScope, $http) 
     function send(to, text) {
         var conversation = Guest[to]['conversation'];
         Utility.addConversation(conversation, text, 'you');
-        makeHeader($rootScope.agent._id, text, to);
+        makeHeader($rootScope.agent._id, text, to, true);
         emit({to : to, from : $rootScope.agent._id, text : text});
     }
 
@@ -240,6 +214,8 @@ App.service('ChatService', ['$rootScope', '$http', function( $rootScope, $http) 
             for(var i=0; i < items.length; i++) {
                 var item = items[i];
                 var id = item.from;
+                var selected = false;
+                //if(i === 0) selected = true;
                 if(item.to.indexOf('JUVENIK') !== -1) {
                     id = item.to;
                 }
@@ -252,7 +228,8 @@ App.service('ChatService', ['$rootScope', '$http', function( $rootScope, $http) 
                         guestId : id,
                         "type": item.from.indexOf('_JUVENIK') !== -1 ? 'him' : 'you',
                         "text": item.text,
-                        "epoch": item.epoch
+                        "epoch": item.epoch,
+                        selected : selected
                     }
                 }
             }
@@ -275,3 +252,8 @@ App.service('ChatService', ['$rootScope', '$http', function( $rootScope, $http) 
 
     return ChatService;
 }])
+
+/*
+    Structure of
+    ChatService.Guest =
+ */

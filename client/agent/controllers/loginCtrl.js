@@ -8,7 +8,7 @@ App.controller('loginCtrl',['$scope', 'Auth', '$location', '$rootScope',function
     $scope.error = { email : false, password : false};
 
     $scope.login = function() {
-        $scope.serverErr = null;
+        $scope.error.serverErr = null;
         $scope.error.email = !Valid.email($scope.user.email);
         $scope.error.password = !Valid.password($scope.user.password);
 
@@ -20,7 +20,7 @@ App.controller('loginCtrl',['$scope', 'Auth', '$location', '$rootScope',function
             .then(function(success) {
                 $location.path('/');
             }, function(err) {
-                $scope.serverErr = err.data.message;
+                $scope.error.serverErr = err.data.message;
             })
     }
 }])

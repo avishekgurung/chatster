@@ -17,11 +17,13 @@
   },
   "homepage": "https://github.com/avishekgurung/chatster#readme",
   "dependencies": {
+    "angular-moment": "^1.0.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "install": "^0.10.1",
     "jsonwebtoken": "^7.4.1",
+    "moment": "^2.18.1",
     "mongoose": "^4.10.3",
     "mongoose-type-email": "^1.0.5",
     "morgan": "^1.8.2",

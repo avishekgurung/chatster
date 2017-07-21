@@ -1,0 +1,4 @@
+1. If already existing agent registers then we should throw  'user already exists'.
+
+2. Sending message does not go the bottom. -> DONE
+    https://stackoverflow.com/questions/26343832/scroll-to-bottom-in-chat-box-in-angularjs

@@ -15,6 +15,12 @@ var Valid = (function () {
 
     //Password Validator
     function password(password) {
+        return !!password;
+    }
+
+    function name(name) {
+        if(!name) return false;
+        if(name.length < 1) return false;
         return true;
     }
 
@@ -24,6 +30,7 @@ var Valid = (function () {
     }
 
     return  {
+        name : name,
         email : email,
         password : password,
         array : array

@@ -1,3 +1,41 @@
+
+<div class="container">
+    <div class="row go-register pull-right">
+        <a href="/agent/login">Login</a>
+    </div>
+    <div class="login row">
+        <form class="col-sm-4 col-sm-offset-4" method="post" ng-submit="register()" ng-if="!serverSucces">
+            <div class="row">
+                <h2>Register</h2>
+            </div>
+            <div class="row">
+                <input placeholder="Name" ng-model="user.name" ng-keyup="error.name=false">
+            </div>
+            <div class="row">
+                <input placeholder="Email" ng-model="user.email" ng-keyup="error.email=false">
+            </div>
+            <div class="row">
+                <input placeholder="Password" ng-model="user.password" type="password" ng-keyup="error.password=false">
+            </div>
+            <div class="row">
+                <button type="submit" class="btn btn-primary">I want an account</button>
+            </div>
+            <div class="row err">
+                <span ng-if="error.name">Invalid name <span ng-if="error.password || error.email"> | </span> </span>
+                <span ng-if="error.email">Invalid email <span ng-if="error.password"> | </span> </span>
+                <span ng-if="error.password">Invalid password</span>
+                <span ng-if="error.serverErr">Email or Password mismatch</span>
+            </div>
+        </form>
+        <div class="row" ng-if="serverSucces">
+            <h2>{{user.email}} registered successfully</h2>
+        </div>
+    </div>
+</div>
+
+
+
+<!--
 <div>
     <div class="page-header">
         <h1>Register</h1>
@@ -31,3 +69,4 @@
         </div>
     </div>
 </div>
+-->

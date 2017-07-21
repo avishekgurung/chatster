@@ -1,26 +1,27 @@
-<div>
-    <div class="page-header">
-        <h1>Login</h1>
-        <a class="pull-right" href="/agent/register">Register</a>
+
+<div class="container">
+    <div class="row go-register pull-right">
+        <a href="/agent/register">Register</a>
     </div>
-    <div class="row">
-        <div class="col-sm-4 col-sm-offset-4">
-            <form ng-show="!serverSucces" method="post" ng-submit="login()">
-                Email : <input class="form-control" ng-model="user.email" ng-keyup="error.email=false">
-                <span ng-if="error.email">Invalid email</span>
-
-                <br>
-
-                Password : <input class="form-control" ng-model="user.password" type="password" ng-keyup="error.password=false">
-                <span ng-if="error.password">Invalid password</span>
-
-                <br>
-
-                <button type="submit" class="btn btn-success">Login</button>
-            </form>
-            <div ng-if="serverErr">
-                {{serverErr}}
+    <div class="login row">
+        <form class="col-sm-4 col-sm-offset-4" method="post" ng-submit="login()">
+            <div class="row">
+                <h2>Login</h2>
             </div>
-        </div>
+            <div class="row">
+                <input placeholder="Email" ng-model="user.email" ng-keyup="error.email=false">
+            </div>
+            <div class="row">
+                <input placeholder="Password" ng-model="user.password" type="password" ng-keyup="error.password=false">
+            </div>
+            <div class="row">
+                <button type="submit" class="btn btn-primary">Let me in</button>
+            </div>
+            <div class="row err">
+                <span ng-if="error.email">Invalid email <span ng-if="error.password"> | </span> </span>
+                <span ng-if="error.password">Invalid password</span>
+                <span ng-if="error.serverErr">Email or Password mismatch</span>
+            </div>
+        </form>
     </div>
 </div>

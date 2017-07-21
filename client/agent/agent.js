@@ -3,7 +3,7 @@
  */
 var App = angular.module('agent', ['ngRoute']);
 
-App.run(['$rootScope', '$location', 'Auth', '$http', 'AuthToken', 'ChatService', function($rootScope, $location, Auth, $http, AuthToken, ChatService) {
+App.run(['$rootScope', '$location', 'Auth', '$http', 'AuthToken', 'ChatService', '$window', function($rootScope, $location, Auth, $http, AuthToken, ChatService, $window) {
     var pageReload = true;
     var path = $location.path();
 
@@ -23,10 +23,12 @@ App.run(['$rootScope', '$location', 'Auth', '$http', 'AuthToken', 'ChatService',
 
     if(token) {
         if(path === '/agent/login' || path === '/agent/register') {
+            $window.document.body.style.background = '#e6ecf0';
             $location.path('/');
         } else {
             Auth.getUser()
                 .then(function(res) {
+                    $window.document.body.style.background = '#e6ecf0';
                     $rootScope.agent = res.data.user;
                     ChatService.open(res.data.user._id);
 
@@ -38,7 +40,6 @@ App.run(['$rootScope', '$location', 'Auth', '$http', 'AuthToken', 'ChatService',
     }
     else {
         if(path !== '/agent/login' && path !== '/agent/register') {
-            //ChatService.close();
             $location.path('/agent/login');
         }
     }

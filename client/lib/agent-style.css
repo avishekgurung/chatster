@@ -1,0 +1,355 @@
+html { width: 100%; height:100%; overflow:hidden; }
+
+
+/* Login and Registration */
+body {
+    margin: 0;
+    width: 100%;
+    height:100%;
+    font-size: 16px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-seri
+/*    font-family: 'Open Sans', sans-serif;*/
+    background: #092756;
+    background: -moz-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%),-moz-linear-gradient(top,  rgba(57,173,219,.25) 0%, rgba(42,60,87,.4) 100%), -moz-linear-gradient(-45deg,  #670d10 0%, #092756 100%);
+    background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -webkit-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -webkit-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
+    background: -o-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -o-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -o-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
+    background: -ms-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -ms-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -ms-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
+    background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), linear-gradient(to bottom,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), linear-gradient(135deg,  #670d10 0%,#092756 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3E1D6D', endColorstr='#092756',GradientType=1 );
+}
+
+.header {
+    margin: 0;
+    width: 100%;
+    height:100%;
+    font-family: 'Open Sans', sans-serif;
+    background: #092756;
+    background: -moz-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%),-moz-linear-gradient(top,  rgba(57,173,219,.25) 0%, rgba(42,60,87,.4) 100%), -moz-linear-gradient(-45deg,  #670d10 0%, #092756 100%);
+    background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -webkit-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -webkit-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
+    background: -o-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -o-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -o-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
+    background: -ms-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -ms-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -ms-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
+    background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), linear-gradient(to bottom,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), linear-gradient(135deg,  #670d10 0%,#092756 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3E1D6D', endColorstr='#092756',GradientType=1 );
+}
+
+.login {
+    margin-top: 15%;
+}
+
+.login input {
+    width: 100%;
+}
+
+.login input {
+    width: 100%;
+    margin-bottom: 10px;
+    background: rgba(0,0,0,0.3);
+    border: none;
+    outline: none;
+    padding: 10px;
+    font-size: 13px;
+    color: #fff;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+    border: 1px solid rgba(0,0,0,0.3);
+    border-radius: 4px;
+    box-shadow: inset 0 -5px 45px rgba(100,100,100,0.2), 0 1px 1px rgba(255,255,255,0.2);
+    -webkit-transition: box-shadow .5s ease;
+    -moz-transition: box-shadow .5s ease;
+    -o-transition: box-shadow .5s ease;
+    -ms-transition: box-shadow .5s ease;
+    transition: box-shadow .5s ease;
+}
+
+.login input:focus {
+    box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4),
+    0 1px 1px rgba(255,255,255,0.2);
+}
+
+.login button {
+    width: 100%;
+}
+
+.login .row {
+    margin-bottom: 10px;
+}
+
+.login h2 {
+    color: white; text-shadow: 0 0 10px rgba(0,0,0,0.3); letter-spacing:1px; text-align:center;
+}
+
+.login .err {
+    color:wheat;
+}
+
+.go-register a {
+    color:white;
+    text-decoration: none;
+}
+
+.go-register a:hover {
+    color : lightgrey;
+}
+
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    text-align: center;
+    color:#337ab7;
+    font-size: x-small;
+}
+
+.footer a {
+    text-decoration: none;
+    cursor: pointer;
+    color : #63acea;
+    font-weight: bold;
+}
+
+.footer a:hover {
+    color:#a4cef3;
+}
+
+/* Header */
+.head {
+    width: 100%;
+    color:#66757f;
+    height: 3em;
+    border-bottom: 1px solid rgba(0,0,0,0.15);
+    background-color: white;
+}
+
+.head-container {
+    margin: auto;
+    width: 93%;
+}
+
+.nav-user, .nav-msg {
+    float: right;
+    height: 3.7em;
+    font-size: .8em;
+    width: 93px;
+    text-align: center;
+    line-height: 3.7em;
+    cursor: pointer;
+}
+
+.nav-user:hover, .nav-msg:hover {
+    border-bottom: 5px solid #0084B4;
+    transition: all .13s ease-in-out;
+    color:#0084B4;
+}
+
+.nav-title {
+    float: left;
+    font-size: 1.2em;
+    line-height: 2.7em;
+    color: #0084B4;
+    cursor: pointer;
+}
+
+.nav-title:hover {
+    color : #035a79;
+}
+
+
+.nav-pic {
+    float: right;
+    margin-right: 15px;
+    margin-left: 15px;
+    line-height: 3em;
+}
+
+.nav-pic img {
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    border:1px solid rgba(0,0,0,0.15);
+    margin-top: 6px;
+    cursor: pointer;
+}
+
+.nav-pic img:hover {
+    border:2px solid #0084B4;
+}
+
+/* Small individual class*/
+.show-scroll-bar {
+    overflow-y: scroll;
+}
+
+.hide-scroll-bar  {
+    overflow: hidden;
+}
+
+.highlight {
+    color : #0084B4;
+}
+
+
+/*Chat List*/
+
+
+.chat-list, .conversation {
+    background-color: white;
+    margin-top: .6em;
+    height: 560px;
+}
+
+.chat-list-inset {
+    width: 261px;
+}
+
+.list-head {
+    color: #0084B4;
+    font-size: large;
+    margin-top: .9em;
+}
+
+.chat-item, .chat-display {
+    margin: 1em 0em;
+}
+
+.chat-item {
+    border-bottom: 1px solid rgba(0,0,0,0.15);
+    cursor: pointer;
+}
+
+.chat-item:hover {
+    color: rgba(0,0,0,0.15);
+    transition: all .23s ease-in-out;
+}
+
+.chat-list .guest-name {
+    font-size: .9em;
+    font-weight: bold;
+}
+
+.chat-list .dt, .chat-list .guest-text {
+    font-size: .7em;
+    font-size: small;
+}
+
+.chat-list .guest-text {
+    color:#66757f;
+}
+
+.conversation {
+    margin-left: .6em;
+}
+
+.conversation-inset {
+    width: 641px;
+}
+
+/*Conversation*/
+.chat-display {
+    color: #262626;
+    overflow-x:hidden;
+    font-family: arial,sans-serif;
+    font-size: 13px;
+    line-height: 16px;
+    height: 434px;
+    max-height: 434px;
+}
+
+.chat-you {
+    float: right;
+    background-color: #e6ecf0;
+    clear: both;
+    margin: 5px 25px;
+}
+
+.chat-him {
+    background-color: #e2e0e0;
+    float: left;
+    clear: both;
+    margin: 5px 4px;
+}
+
+.chat-talktext{
+    padding: .7em;
+    text-align: left;
+    line-height: 1.5em;
+    overflow: hidden;
+}
+
+.chat-talktext p{
+    -webkit-margin-before: 0em;
+    -webkit-margin-after: 0em;
+}
+
+.chat-talk-bubble {
+    display: inline-block;
+    position: relative;
+    max-width: 183px;
+    height: auto;
+}
+
+.chat-tri-right.chat-right-top:after{
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: auto;
+    right: -6px;
+    top: 0px;
+    bottom: auto;
+    border: 8px solid;
+    border-color: #e6ecf0 transparent transparent transparent;
+}
+
+.chat-tri-right.chat-left-top:after{
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: -6px;
+    right: auto;
+    top: 0px;
+    bottom: auto;
+    border: 8px solid;
+    border-color: #e2e0e0 transparent transparent transparent;
+}
+
+.chat-round{
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+
+}
+
+.chat-his-pic {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+.chat-date {
+    clear: both;
+    text-align: center;
+    ont-family: arial,sans-serif;
+    font-size: 11px;
+    color: rgba(0,0,0,.54);
+}
+
+
+/*Text box where user enters meesage*/
+.txt-box-container {
+    border-top:1px solid rgba(0,0,0,0.15);
+}
+
+.txt-box {
+    width: 639px;
+    border : none;
+    background-color: #f5f8fa;
+    border-style: none;
+    line-height: 30px;
+    padding-left: 5px;
+    margin-top: 12px;
+    color: #292f33;
+    font-size: 13px;
+    border: 1px solid #d2e2ec;
+}

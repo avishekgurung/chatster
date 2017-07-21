@@ -2,25 +2,28 @@
  * Created by avishek on 6/3/17.
  */
 
-App.controller('registerCtrl', ['Auth', '$scope', '$http', function(Auth, $scope, $http) {
-    console.log('SIGN UP CTRL');
+App.controller('registerCtrl', ['Auth', '$scope', '$location', '$timeout', function(Auth, $scope, $location, $timeout) {
     $scope.user = {};
-    $scope.error = { name : false, email : false, password : false};
+    $scope.error = { name : false, email : false, password : false, serverErr : false};
+    $scope.serverSucces = false;
 
     $scope.register = function() {
-        $scope.serverErr = null;
-        $scope.error.name = !$scope.user.name;
+        $scope.error.serverErr = null;
+        $scope.error.name = !Valid.name($scope.user.name);
         $scope.error.email = !Valid.email($scope.user.email);
         $scope.error.password = !Valid.password($scope.user.password);
 
-        if($scope.error.email || $scope.error.password) {
+        if($scope.error.name || $scope.error.email || $scope.error.password) {
             return;
         }
         Auth.signup($scope.user)
             .then(function(res){
-                $scope.serverSucces = res.data.message;
+                $scope.serverSucces = true;
+                $timeout(function(){
+                    $location.path('/agent/login');
+                }, 2000);
             }, function(err) {
-                $scope.serverErr = err.data.message;
+                $scope.error.serverErr = err.data.message;
             })
 
     }
