@@ -7,10 +7,12 @@ App.directive('conversation', ['GuestService', '$timeout', function(GuestService
         templateUrl : 'guest/views/conversation.html',
         link : function(scope, elements, attributes) {
             scope.conversation = [];
+            scope.agentPic = null;
             scope.$watch(function(){
                 return GuestService.conversation;
             }, function() {
                 scope.conversation = GuestService.conversation;
+                scope.agentPic = "/public/images/" + GuestService.agent.name[0].toLowerCase()+".png";
                 $timeout(function () {
                     var obj = document.getElementById('convrplay');
                     obj.scrollTop =  obj.scrollHeight + 100;

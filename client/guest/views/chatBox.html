@@ -2,8 +2,8 @@
     <div class="chat-head" ng-click="showBox=!showBox">
         <div class="chat-head-content">
             <div class="chat-user-name">
-                <span ng-if="agent">{{agent.name}} </span>
-                <span ng-if="!agent">Chat with us!</span>
+                <span ng-if="agent.name">{{agent.name}} </span>
+                <span ng-if="!agent.name">Chat with us!</span>
             </div>
         </div>
         <div class="chat-close-box" ng-click="closeCommunication(); showBox=true">
@@ -15,8 +15,10 @@
         </div>
     </div>
     <div class="chat-body">
-        <conversation ng-if="initiate && agent"></conversation>
+        <!-- Actual Conversation-->
+        <conversation ng-if="agent._id"></conversation>
 
+        <!-- Email form -->
         <div ng-if="!agent" class="chat-display">
             <div class="email" ng-if="!initiate">
                 <input type="text" class="chat-text"
@@ -29,12 +31,32 @@
                 </span>
                 </div>
             </div>
-            <div ng-if="initiate && !agent" class="loader"></div>
+
+            <!-- Loader -->
+            <div ng-if="initiate && !agent && serverReponse === 0" class="loader"></div>
+
+            <!-- When no support is available -->
+            <div ng-if="initiate && !agent && serverReponse === 2">
+                <div style="clear: both">
+                    <div style="float: left">
+                        <img src="/public/images/default-avatar.png" class="chat-his-pic">
+                    </div>
+                    <div style="float: left">
+                        <div class="chat-him chat-talk-bubble chat-tri-right chat-round chat-left-top">
+                            <div class="chat-talktext">
+                                <p>
+                                    No support available at this time. Please try again later.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="chat-entry">
             <div>
-                <input ng-if="initiate && agent" type="text" placeholder="Send a message" class="chat-text" ng-keypress="change($event)" ng-model="instance.text">
+                <input ng-if="agent._id" type="text" placeholder="Send a message" class="chat-text" ng-keypress="change($event)" ng-model="instance.text">
                 <div ng-if="!agent" class="chat-text"></div>
             </div>
         </div>

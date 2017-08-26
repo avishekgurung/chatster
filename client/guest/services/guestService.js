@@ -59,7 +59,7 @@ App.factory('GuestService', ['$http', '$rootScope', function($http, $rootScope) 
                 });
             }
             else {
-                GuestService.agent = null;
+                GuestService.agent = undefined;
             }
 
         }, function(){

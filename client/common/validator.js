@@ -29,11 +29,22 @@ var Valid = (function () {
         return arr.constructor.toString().toLowerCase().indexOf('array') !== -1;
     }
 
+    function sleep(seconds) {
+        var date = new Date().getTime() + (seconds * 1000);
+        while ( new Date().getTime() < date ) {
+
+        }
+        return true;
+    }
+
     return  {
         name : name,
         email : email,
         password : password,
-        array : array
+        array : array,
+        sleep : sleep
     }
 
 })();
+
+module.exports = Valid;

@@ -10,6 +10,7 @@ var express = require('express');
 var jsonwebtoken = require('jsonwebtoken');
 var _ = require('underscore');
 var ChatService = require('../services/chatService');
+var Valid = require('../../client/common/validator');
 
 function createToken(user) {
     var token = jsonwebtoken.sign({
@@ -50,6 +51,7 @@ api.get('/chatDetails', function(req, res) {
 
 //guest activation
 api.get('/guestActivation', function(req, res) {
+    Valid.sleep(1);
     User.find({}, function(err, users){ //the selection query should be based on a company
         if(err) {
             res.status(500).json({message : 'Guest Activation : Finding company users.'})

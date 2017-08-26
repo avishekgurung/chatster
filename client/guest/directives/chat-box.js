@@ -7,6 +7,7 @@ App.directive("chatBox", ['GuestService', '$rootScope', function(GuestService) {
         templateUrl : "guest/views/chatBox.html",
         link : function(scope, elements, attributes) {
             scope.initiate = false;
+            scope.serverReponse = 0;
             scope.instance = {text : '', email: '', emailValid : true};
             scope.text = '';
             scope.agent = null;
@@ -14,6 +15,7 @@ App.directive("chatBox", ['GuestService', '$rootScope', function(GuestService) {
             scope.$watch(function() {
                 return GuestService.agent;
             }, function() {
+                scope.serverReponse = GuestService.agent ? 1 : 2;
                 scope.agent = GuestService.agent;
             }, true);
 
@@ -33,7 +35,7 @@ App.directive("chatBox", ['GuestService', '$rootScope', function(GuestService) {
                     var email = scope.instance.email;
                     scope.instance.email = '';
                     if(Valid.email(email)) {
-
+                        scope.serverReponse = 0;
                         scope.initiate = true;
                         GuestService.initiate();
                     }
