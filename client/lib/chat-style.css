@@ -4,41 +4,32 @@ so that the css does not over ridden by host app and our CSS does not override t
 */
 
 .chat-container { /*incase we change the module to iframe*/
-    width: 100%;
-    margin: 0;
     position: fixed;
-    bottom: 0;
-    font-family: arial,sans-serif;
-    margin-bottom: 0px;
-    z-index: 2147483647;
-    overflow: hidden;
-    height: 23.5em;
+    bottom: 0em;
+    right: 0em;
 }
 
 .chat-box {
     font-size:14px;
     max-height: 26.7em;
     width: 18.8em;
-    float: right;
     margin: 0.2em;
     background-color: white;
     transition: all 0.1s linear;
 }
 
-.chat-head, .chat-tool-bar {
-    min-height: 2.4em;
-}
-
-.chat-tool-bar, .chat-display {
+.chat-display {
     background-color: rgba(0,0,0,.1);
     box-shadow: .1em .1em .2em #888888
 }
 
 .chat-head {
+    min-height: 2.4em;
     color: #fff;
     background-color: #404040; /* #5cab20 for active*/
     cursor: pointer;
     padding: .3em .8em;
+    line-height: 2.3em;
 }
 
 .chat-head-content {
@@ -46,31 +37,28 @@ so that the css does not over ridden by host app and our CSS does not override t
 }
 
 .chat-user-name {
-    font-size: .95em;
-    width: 13em; /*width, overflow and white space are used for text-overflow to work*/
+    font-size: 1.2em;
+    width: 11em; /*width, overflow and white space are used for text-overflow to work*/
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
-.chat-user-time {
-    font-size: .7em;
-}
-
 .chat-minz-box, .chat-close-box {
     float: right;
     font-weight: bold;
-    padding: .3em .5em;
-    position: relative;
-    top: .2em;
+}
+
+.chat-minz-box {
+    margin-right: 1em;
+}
+
+.chat-close-box {
+
 }
 
 .chat-minz-box:hover, .chat-close-box:hover {
     background-color: #797979;
-}
-
-.chat-close-box {
-    margin-left: .4em;
 }
 
 .chat-display {
@@ -180,13 +168,47 @@ so that the css does not over ridden by host app and our CSS does not override t
 
 .chat-box-minz {
     position: relative;
-    bottom: -23.5em;
+    bottom: -21em;
 }
 
 .chat-box-maxz {
     position: relative;
     bottom: 0em;
 }
+
+.chat-display .email {
+    margin: auto;
+    margin-top: 7em;
+}
+
+.chat-display .email input[type='text'] {
+    height: 2.5em;
+    border: 1px solid rgba(128, 128, 128, 0.47);
+    padding-left: .2em;
+    /*color: darkgrey;*/
+}
+
+.email .err {
+    color: maroon;
+}
+
+.loader {
+    margin: auto;
+    margin-top: 7em;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #148be4;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin .5s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
 
 
 

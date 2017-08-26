@@ -1,29 +1,41 @@
-<div class="chat-box" ng-if="agent">
-    <h2>Chat box</h2>
-    <div class="chat-head" onclick="headerClicked(event)">
+<div class="chat-box" ng-class="{'chat-box-minz':!showBox, 'chat-box-maxz':showBox}">
+    <div class="chat-head" ng-click="showBox=!showBox">
         <div class="chat-head-content">
             <div class="chat-user-name">
-                {{agent.name}}
-            </div>
-            <div class="chat-user-time">
-                Active yesterday
+                <span ng-if="agent">{{agent.name}} </span>
+                <span ng-if="!agent">Chat with us!</span>
             </div>
         </div>
-        <div class="chat-close-box">
+        <div class="chat-close-box" ng-click="closeCommunication(); showBox=true">
             x
         </div>
         <div class="chat-minz-box">
-            _
+            <span ng-if="showBox">_</span>
+            <span ng-if="!showBox">^</span>
         </div>
     </div>
     <div class="chat-body">
-        <div class="chat-tool-bar">
-            Tool <span ng-click="closeCommunication()">XX</span>
+        <conversation ng-if="initiate && agent"></conversation>
+
+        <div ng-if="!agent" class="chat-display">
+            <div class="email" ng-if="!initiate">
+                <input type="text" class="chat-text"
+                       ng-keypress="emailValidate($event)"
+                       ng-model="instance.email"
+                       placeholder="Enter email and press Enter">
+                <div>
+                <span class="chat-text err" ng-if="!instance.emailValid">
+                    * Email id is not valid
+                </span>
+                </div>
+            </div>
+            <div ng-if="initiate && !agent" class="loader"></div>
         </div>
-        <conversation></conversation>
+
         <div class="chat-entry">
             <div>
-                <input type="text" placeholder="Send a message" class="chat-text" ng-keypress="change($event)" ng-model="instance.text">
+                <input ng-if="initiate && agent" type="text" placeholder="Send a message" class="chat-text" ng-keypress="change($event)" ng-model="instance.text">
+                <div ng-if="!agent" class="chat-text"></div>
             </div>
         </div>
     </div>

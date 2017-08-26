@@ -6,22 +6,15 @@
     <title>Chatster Guest</title>
     <script type="text/javascript" src="../socket.io/socket.io.js"></script>
     <script type="text/javascript" src="/lib/angular.js"></script>
-    <script type="text/javascript" src="/lib/angular-route.js"></script>
+    <script type="text/javascript" src="/common/validator.js"></script>
     <link rel="stylesheet" href="/lib/chat-style.css">
 </head>
 <body>
-    <h1>Guest</h1>
 
-    <div ng-controller="guestCtrl">
-        <div class="row">
-            <div class="col-sm-4 col-sm-offset-4">
-                <div ng-click="initiate()">Initiate chat</div>
-            </div>
-        </div>
-
+    <div ng-controller="guestCtrl" class="chat-container">
         <chat-box></chat-box>
-
     </div>
+
     <script type="text/javascript" src="/guest/controllers/guestCtrl.js"></script>
     <script type="text/javascript" src="/guest/directives/chat-box.js"></script>
     <script type="text/javascript" src="/guest/directives/conversation.js"></script>

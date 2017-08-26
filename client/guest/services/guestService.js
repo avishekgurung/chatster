@@ -38,18 +38,29 @@ App.factory('GuestService', ['$http', '$rootScope', function($http, $rootScope) 
 
     //initiating chat conversation
     function initiate() {
-        $http.get('/api/guestActivation').then(function(response){
-            GuestService.agent = response.data.agent;
-            GuestService.guest = response.data.guest;
-            GuestService.conversation = [{
-                "type": "you",
-                "text": ["Initiation of conversation"],
-                "epoch": 1495547489403
-            }];
-            GuestService.status = response.data.message;
+        $http.get('/api/guestActivation').then(function(response) {
+            if (response.data.success) {
+                GuestService.agent = response.data.agent;
+                GuestService.guest = response.data.guest;
+                GuestService.conversation = [{
+                    "type": "you",
+                    "text": ["Initiation of conversation"],
+                    "epoch": 1495547489403
+                }];
+                GuestService.status = response.data.message;
 
-            open(GuestService.guest._id, GuestService.agent._id);
-            emit({from : GuestService.guest._id, to : GuestService.agent._id, text : 'Initiation of conversation', name : GuestService.agent.name, pic : GuestService.agent.pic});
+                open(GuestService.guest._id, GuestService.agent._id);
+                emit({
+                    from: GuestService.guest._id,
+                    to: GuestService.agent._id,
+                    text: 'Initiation of conversation',
+                    name: GuestService.agent.name,
+                    pic: GuestService.agent.pic
+                });
+            }
+            else {
+                GuestService.agent = null;
+            }
 
         }, function(){
 

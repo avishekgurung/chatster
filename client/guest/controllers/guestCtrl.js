@@ -3,12 +3,8 @@
  */
 
 
-var App = angular.module('guest', ['ngRoute']);
+var App = angular.module('guest', []);
 
 App.controller('guestCtrl', ['$scope', 'GuestService', function($scope, GuestService) {
-
-    $scope.initiate = function() {
-        GuestService.initiate();
-    }
 
 }]);

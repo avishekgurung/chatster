@@ -6,9 +6,10 @@ App.directive("chatBox", ['GuestService', '$rootScope', function(GuestService) {
     return {
         templateUrl : "guest/views/chatBox.html",
         link : function(scope, elements, attributes) {
-            scope.instance = {text : ''};
-            scope.agent = null;
+            scope.initiate = false;
+            scope.instance = {text : '', email: '', emailValid : true};
             scope.text = '';
+            scope.agent = null;
 
             scope.$watch(function() {
                 return GuestService.agent;
@@ -27,8 +28,24 @@ App.directive("chatBox", ['GuestService', '$rootScope', function(GuestService) {
                 }
             }
 
+            scope.emailValidate = function(event) {
+                if(event.which === 13) {
+                    var email = scope.instance.email;
+                    scope.instance.email = '';
+                    if(Valid.email(email)) {
+
+                        scope.initiate = true;
+                        GuestService.initiate();
+                    }
+                    else {
+                        scope.instance.emailValid = false;
+                    }
+                }
+            }
+
             scope.closeCommunication = function() {
-                var chatDisplay = scope.user.chatDisplay;
+                console.log('CLOSE COMMUNICATION');
+                /*var chatDisplay = scope.user.chatDisplay;
                 var lastMessage = chatDisplay[chatDisplay.length-1];
                 var from = $rootScope.agent._id;
                 var to = scope.obj._id;
@@ -39,7 +56,7 @@ App.directive("chatBox", ['GuestService', '$rootScope', function(GuestService) {
                     to = temp;
                 }
 
-                ChatService.closeCommunication([{from:from, to:to, text:text[text.length-1]}]);
+                ChatService.closeCommunication([{from:from, to:to, text:text[text.length-1]}]);*/
             }
         }
     }
