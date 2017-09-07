@@ -19,10 +19,11 @@ var processChat = function(io, message, redis) {
     var text = message.text;
     var date = new Date();
     var epoch = date.getTime();
+    var guestEmail = message.guestEmail;
 
     //storing in redis
     var guestId = from.indexOf('JUVENIK') !== -1 ? from : to;
-    redis.set(guestId, JSON.stringify({to : to, from : from, text : text, date : date, epoch : epoch}));
+    redis.set(guestId, JSON.stringify({to : to, from : from, text : text, date : date, epoch : epoch, guestEmail : guestEmail}));
     redis.expire(guestId, 60 * 60 * 24);
 
     //Incrementing the connections of support. Logic: increment connection peers if its a first message
@@ -57,7 +58,7 @@ function makeChatList(chatList) {
         if(item.from && item.to && item.text) {
             var epoch = item.epoch || new Date().getTime();
             var date = new Date(epoch);
-            ChatList.findOneAndUpdate({guestId : guestId}, {guestId : guestId, from : item.from, to : item.to, text : item.text, date : date, epoch : epoch}, {upsert : true}, function(err, doc) {
+            ChatList.findOneAndUpdate({guestId : guestId}, {guestId : guestId, from : item.from, to : item.to, text : item.text, date : date, epoch : epoch, guestEmail : item.guestEmail}, {upsert : true}, function(err, doc) {
                 if(err) {
                     console.log('NOT done with Conn updation');
                     console.log(err);

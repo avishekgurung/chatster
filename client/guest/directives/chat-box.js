@@ -11,10 +11,12 @@ App.directive("chatBox", ['GuestService', '$rootScope', function(GuestService) {
             scope.instance = {text : '', email: '', emailValid : true};
             scope.text = '';
             scope.agent = null;
+            scope.showAlert = false;
 
             scope.$watch(function() {
                 return GuestService.agent;
             }, function() {
+                console.log('GuestService changed');
                 scope.serverReponse = GuestService.agent ? 1 : 2;
                 scope.agent = GuestService.agent;
             }, true);
@@ -37,7 +39,7 @@ App.directive("chatBox", ['GuestService', '$rootScope', function(GuestService) {
                     if(Valid.email(email)) {
                         scope.serverReponse = 0;
                         scope.initiate = true;
-                        GuestService.initiate();
+                        GuestService.initiate(email.toLowerCase());
                     }
                     else {
                         scope.instance.emailValid = false;
@@ -45,20 +47,29 @@ App.directive("chatBox", ['GuestService', '$rootScope', function(GuestService) {
                 }
             }
 
-            scope.closeCommunication = function() {
-                console.log('CLOSE COMMUNICATION');
-                /*var chatDisplay = scope.user.chatDisplay;
-                var lastMessage = chatDisplay[chatDisplay.length-1];
-                var from = $rootScope.agent._id;
-                var to = scope.obj._id;
-                var text = lastMessage.text;
-                if(lastMessage.type === 'him') {
-                    var temp = from;
-                    from = to;
-                    to = temp;
+            scope.close = function() {
+                //case when agent is not available and guest clicks x, then we show the email form
+                if(scope.initiate) {
+                    scope.initiate = false;
                 }
+                if(!scope.agent) return;
+                scope.showBox = false;
+                scope.showAlert = true;
+            }
 
-                ChatService.closeCommunication([{from:from, to:to, text:text[text.length-1]}]);*/
+            scope.closeCommunication = function() {
+                scope.showAlert = false;
+                scope.initiate = false;
+                scope.serverReponse = 0;
+                scope.instance = {text : '', email: '', emailValid : true};
+                scope.text = '';
+                scope.agent = null;
+                GuestService.agent = null;
+                GuestService.close();
+            }
+
+            scope.cancel = function() {
+                scope.showAlert = false;
             }
         }
     }

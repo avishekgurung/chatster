@@ -21,7 +21,7 @@ App.service('ChatService', ['$rootScope', '$http','$timeout', function( $rootSco
                 $rootScope.$apply(function(){
                     var selected = false;
                     if(message.name) {
-                        receiveFirst(message.from, message.to, message.text, message.name, message.pic);
+                        receiveFirst(message.from, message.to, message.text, message.name, message.pic, message.guestEmail);
                         selected = true;
                     }
                     else {
@@ -47,7 +47,8 @@ App.service('ChatService', ['$rootScope', '$http','$timeout', function( $rootSco
                 type : from.indexOf('JUVENIK') !== -1 ? 'him' : 'you',
                 text : text,
                 epoch : new Date().getTime(),
-                selected: selected
+                selected: selected,
+                guestEmail : Guest[guestId].guestEmail
             }
             Guest[guestId].header = header;
             Guest[guestId].updated = true;
@@ -67,7 +68,7 @@ App.service('ChatService', ['$rootScope', '$http','$timeout', function( $rootSco
 
 
     //First time receiving a message
-    function receiveFirst (from, to, text, name, pic) {
+    function receiveFirst (from, to, text, name, pic, guestEmail) {
         if(!Guest[from]) {
             var conversation = [];
             Guest[from] = {
@@ -75,7 +76,8 @@ App.service('ChatService', ['$rootScope', '$http','$timeout', function( $rootSco
                 name : name,
                 pic : pic,
                 conversation : conversation,
-                sendFirst : false
+                sendFirst : false,
+                guestEmail: guestEmail
             }
         }
 
@@ -120,7 +122,7 @@ App.service('ChatService', ['$rootScope', '$http','$timeout', function( $rootSco
                 var current = arr[i];
                 current.type = current.from.indexOf('JUVENIK') !== -1 ? 'him' : 'you';
                 if(last.type === current.type) {
-                    if(current.epoch - last.epoch < 5000) {
+                    if(current.epoch - last.epoch < 30000) {
                         last.epoch = current.epoch;
                         last.message = last.message + delimitter + current.message;
                     }
@@ -168,7 +170,7 @@ App.service('ChatService', ['$rootScope', '$http','$timeout', function( $rootSco
 
 
     //creating a chat list
-    function createChatList (params) {
+/*    function createChatList (params) {
         var ids;
         var chatList = [];
 
@@ -204,7 +206,7 @@ App.service('ChatService', ['$rootScope', '$http','$timeout', function( $rootSco
             }
         }
         return chatList;
-    }
+    }*/
 
     function makeChatDict() {
         var agentId = $rootScope.agent._id;
@@ -224,12 +226,14 @@ App.service('ChatService', ['$rootScope', '$http','$timeout', function( $rootSco
                     pic: "./pic.jpg",
                     conversation: [],
                     updated : false,
+                    guestEmail : item.guestEmail,
                     header : {
                         guestId : id,
                         "type": item.from.indexOf('_JUVENIK') !== -1 ? 'him' : 'you',
                         "text": item.text,
                         "epoch": item.epoch,
-                        selected : selected
+                        selected : selected,
+                        guestEmail : item.guestEmail
                     }
                 }
             }
@@ -245,7 +249,7 @@ App.service('ChatService', ['$rootScope', '$http','$timeout', function( $rootSco
         send : send,
         open : open,
         close : close,
-        createChatList : createChatList,
+        //createChatList : createChatList,
         makeChatDict : makeChatDict,
         getChatDetails : getChatDetails
     }
@@ -257,3 +261,4 @@ App.service('ChatService', ['$rootScope', '$http','$timeout', function( $rootSco
     Structure of
     ChatService.Guest =
  */
+

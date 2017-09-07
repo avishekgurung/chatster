@@ -37,14 +37,32 @@ var Valid = (function () {
         return true;
     }
 
+    function makeDate(epoch) {
+        var date = (!epoch && typeof epoch !== 'number' && epoch.toString().length < 13) ? new Date() : new Date(epoch);
+        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var dt = date.getDate();
+        var day = days[date.getDay()];
+        var hours = date.getHours();
+        var minutes =  date.getMinutes();
+
+        return 	day + ", " + hours + ":" + minutes + " on " + dt + "/" + month + "/" + year;
+    }
+
     return  {
         name : name,
         email : email,
         password : password,
         array : array,
-        sleep : sleep
+        sleep : sleep,
+        makeDate : makeDate
     }
 
 })();
 
-module.exports = Valid;
+if(typeof module !== "undefined") {
+    module.exports = Valid;
+}

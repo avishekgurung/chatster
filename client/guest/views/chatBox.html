@@ -6,20 +6,18 @@
                 <span ng-if="!agent.name">Chat with us!</span>
             </div>
         </div>
-        <div class="chat-close-box" ng-click="closeCommunication(); showBox=true">
-            x
-        </div>
+        <div class="chat-close-box fa fa-window-close" ng-click="close();"></div>
         <div class="chat-minz-box">
-            <span ng-if="showBox">_</span>
-            <span ng-if="!showBox">^</span>
+            <span ng-if="showBox" class="fa fa-window-minimize"></span>
+            <span ng-if="!showBox" class="fa fa-window-maximize"></span>
         </div>
     </div>
     <div class="chat-body">
         <!-- Actual Conversation-->
-        <conversation ng-if="agent._id"></conversation>
+        <conversation ng-if="agent._id && !showAlert"></conversation>
 
         <!-- Email form -->
-        <div ng-if="!agent" class="chat-display">
+        <div ng-if="!agent && !showAlert" class="chat-display">
             <div class="email" ng-if="!initiate">
                 <input type="text" class="chat-text"
                        ng-keypress="emailValidate($event)"
@@ -39,7 +37,7 @@
             <div ng-if="initiate && !agent && serverReponse === 2">
                 <div style="clear: both">
                     <div style="float: left">
-                        <img src="/public/images/default-avatar.png" class="chat-his-pic">
+                        <img src="/public/images/avatar/default-avatar.png" class="chat-his-pic">
                     </div>
                     <div style="float: left">
                         <div class="chat-him chat-talk-bubble chat-tri-right chat-round chat-left-top">
@@ -54,10 +52,31 @@
             </div>
         </div>
 
+        <div ng-if="showAlert" class="chat-display">
+            <div style="clear: both">
+                <div style="float: left">
+                    <img src="/public/images/avatar/default-avatar.png" class="chat-his-pic">
+                </div>
+                <div style="float: left">
+                    <div class="chat-him chat-talk-bubble chat-tri-right chat-round chat-left-top">
+                        <div class="chat-talktext">
+                            <p>
+                                Are you sure, you want to close the communication?
+                            </p>
+                            <p>
+                                <span ng-click="closeCommunication()" class="alert-yes">Yes <span class="fa fa-thumbs-up"></span></span>
+                                <span ng-click="cancel()" class="alert-no">No <span class="fa fa-thumbs-down"></span></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="chat-entry">
             <div>
-                <input ng-if="agent._id" type="text" placeholder="Send a message" class="chat-text" ng-keypress="change($event)" ng-model="instance.text">
-                <div ng-if="!agent" class="chat-text"></div>
+                <input ng-if="agent._id && !showAlert" type="text" placeholder="Send a message" class="chat-text" ng-keypress="change($event)" ng-model="instance.text">
+                <div ng-if="!agent || showAlert" class="chat-text"></div>
             </div>
         </div>
     </div>

@@ -22,8 +22,8 @@
                     <div class="list-head">Messages</div>
                     <div class="chat-item" ng-class="{'highlight':chat.selected}" ng-repeat="chat in chatList | orderBy:'epoch':true" ng-click="getChatDetails(chat.guestId)">
                         <div>
-                            <span class="guest-name">Guest 1 </span>
-                            <span class="dt pull-right">Yesterday</span>
+                            <span class="guest-name"> {{chat.guestEmail}} </span>
+                            <span class="dt pull-right">{{makeDate(chat.epoch)}}</span>
                         </div>
                         <div class="guest-text">{{chat.text}}</div>
                     </div>
@@ -31,7 +31,7 @@
             </div>
             <div class="col-sm-7 conversation">
                 <div class="conversation-inset">
-                    <div class="list-head">{{currentGuest.name}}</div>
+                    <div class="list-head">{{currentGuest.guestEmail}}</div>
                     <div class="chat-display" id="convrplay">
                         <div ng-repeat="message in conversation">
                             <div class="chat-you chat-talk-bubble chat-tri-right chat-round chat-right-top" ng-if="message.type === 'you'">
@@ -44,7 +44,7 @@
 
                             <div style="clear: both" ng-if="message.type === 'him'">
                                 <div style="float: left">
-                                    <img src="/public/images/dp.jpg" class="chat-his-pic">
+                                    <img src="{{guestPic}}" class="chat-his-pic">
                                 </div>
                                 <div style="float: left">
                                     <div class="chat-him chat-talk-bubble chat-tri-right chat-round chat-left-top">
@@ -57,7 +57,7 @@
                                 </div>
                             </div>
                             <div class="chat-date">
-                                {{message.date}}
+                                {{makeDate(message.epoch)}}
                             </div>
                         </div>
                     </div>

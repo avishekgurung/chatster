@@ -72,6 +72,12 @@ io.on('connection', function(socket) {
     //console.log(socket.handshake.query['userId']);
 
     socket.on('CHAT', function(message) {
+        if(message.guestEmail) {
+            io.guestEmail = message.guestEmail;
+        }
+        else {
+            message.guestEmail = io.guestEmail;
+        }
         ChatService.processChat(io, message, redis);
     })
 

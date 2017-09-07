@@ -50,7 +50,8 @@ api.get('/chatDetails', function(req, res) {
 })
 
 //guest activation
-api.get('/guestActivation', function(req, res) {
+api.post('/guestActivation', function(req, res) {
+    var email = req.body.email;
     Valid.sleep(1);
     User.find({}, function(err, users){ //the selection query should be based on a company
         if(err) {
@@ -91,8 +92,9 @@ api.get('/guestActivation', function(req, res) {
                     var guestId = randomString(10) + new Date().getTime() + randomString(10) + '_JUVENIK';
                     var guest = {
                         _id :  guestId,
-                        name : "Guest " + (selectedConnection.count+1),
-                        pic : "/guest.jpg"
+                        name : email,
+                        pic : "/guest.jpg",
+                        email : email
                     };
 
                     Connection.findOneAndUpdate({userId : selectedConnection.userId}, { $push : {guests : guestId}}, function(err, doc) {

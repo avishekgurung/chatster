@@ -54,11 +54,11 @@ so that the css does not over ridden by host app and our CSS does not override t
 }
 
 .chat-close-box {
-
+    margin-top: .6em;
 }
 
 .chat-minz-box:hover, .chat-close-box:hover {
-    background-color: #797979;
+    color: #797979;
 }
 
 .chat-display {
@@ -140,6 +140,7 @@ so that the css does not over ridden by host app and our CSS does not override t
     width: 35px;
     height: 35px;
     border-radius: 50%;
+    margin-left: .4em;
 }
 
 .chat-date {
@@ -208,6 +209,18 @@ so that the css does not over ridden by host app and our CSS does not override t
     100% { transform: rotate(360deg); }
 }
 
+.alert-yes, .alert-no {
+    cursor: pointer;
+}
+
+.alert-yes {
+    color: maroon;
+    margin-right: 1em;
+}
+
+.alert-no {
+    color: #006fa6;
+}
 
 
 

@@ -20,6 +20,7 @@ App.controller('homeCtrl', ['$rootScope', '$location', '$scope', 'Auth', 'ChatSe
     $scope.conversation = null;
     $scope.guestId = '';
     $scope.currentGuest;
+    $scope.guestPic = "/public/images/avatar/default-avatar.png";
 
 
     var cache = {
@@ -46,6 +47,7 @@ App.controller('homeCtrl', ['$rootScope', '$location', '$scope', 'Auth', 'ChatSe
             })
         }
         $scope.currentGuest = ChatService.Guest[$scope.guestId];
+        $scope.guestPic = "/public/images/avatar/" + ChatService.Guest[guestId].guestEmail[0] + ".png";
     }
 
     $scope.change = function (event) {
@@ -72,10 +74,13 @@ App.controller('homeCtrl', ['$rootScope', '$location', '$scope', 'Auth', 'ChatSe
             $scope.currentGuest = ChatService.Guest[$scope.guestId];
 
         }
+        console.log($scope.chatList);
         $timeout(function () {
             var obj = document.getElementById('convrplay');
             obj.scrollTop =  obj.scrollHeight + 100;
         },0);
     }, true);
+
+    $scope.makeDate = Valid.makeDate;
 
 }]);

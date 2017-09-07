@@ -16,7 +16,7 @@ var Utility = (function() {
     function addConversation(conversation, text, type) {
         var now = new Date().getTime();
         var lastMessage = getLastMessage(conversation, type);
-        if(lastMessage && (now - lastMessage.epoch) < 5000) {
+        if(lastMessage && (now - lastMessage.epoch) < 30000) {
             lastMessage.text.push(text);
             lastMessage.epoch = now;
         }

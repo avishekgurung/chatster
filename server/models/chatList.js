@@ -33,6 +33,11 @@ var ChatListSchema = new Schema({
     epoch : {
         type : Number,
         required : true
+    },
+
+    guestEmail : {
+        type : String,
+        required : true
     }
 
 })
