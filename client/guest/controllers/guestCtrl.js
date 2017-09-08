@@ -3,7 +3,7 @@
  */
 
 
-var App = angular.module('guest', []);
+var App = angular.module('guest', ['angularMoment']);
 
 App.controller('guestCtrl', ['$scope', 'GuestService', function($scope, GuestService) {
 

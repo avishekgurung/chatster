@@ -21,11 +21,9 @@
                 <div class="chat-list-inset">
                     <div class="list-head">Messages</div>
                     <div class="chat-item" ng-class="{'highlight':chat.selected, 'message-blink' : chat.unread}" ng-repeat="chat in chatList | orderBy:'epoch':true" ng-click="getChatDetails(chat.guestId)">
-                        <div>
-                            <span class="guest-name">{{chat.guestEmail}} </span>
-                            <span class="dt pull-right" am-time-ago="chat.epoch"></span>
-                        </div>
+                        <div class="guest-name">{{chat.guestEmail}}</div>
                         <div class="guest-text">{{chat.text}}</div>
+                        <div class="dt pull-right" am-time-ago="chat.epoch"></div>
                     </div>
                 </div>
             </div>
@@ -56,9 +54,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="chat-date">
-                                {{makeDate(message.epoch)}}
-                            </div>
+                            <div class="chat-date" am-time-ago="message.epoch"></div>
                         </div>
                     </div>
                     <div class="txt-box-container" id="convr-agent">

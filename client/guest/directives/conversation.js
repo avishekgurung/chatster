@@ -2,7 +2,7 @@
  * Created by avishek on 7/19/17.
  */
 
-App.directive('conversation', ['GuestService', '$timeout', function(GuestService, $timeout) {
+App.directive('conversation', ['GuestService', '$timeout', '$rootScope', function(GuestService, $timeout) {
     return {
         templateUrl : 'guest/views/conversation.html',
         link : function(scope, elements, attributes) {

@@ -1,5 +1,5 @@
 <div class="chat-box" ng-class="{'chat-box-minz':!showBox, 'chat-box-maxz':showBox}">
-    <div class="chat-head" ng-click="showBox=!showBox">
+    <div class="chat-head" ng-click="showBox=!showBox" ng-class="{'highlight' : unread}">
         <div class="chat-head-content">
             <div class="chat-user-name">
                 <span ng-if="agent.name">{{agent.name}} </span>

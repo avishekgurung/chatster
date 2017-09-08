@@ -211,7 +211,7 @@ body {
     margin-top: .9em;
 }
 
-.chat-item, .chat-display {
+.chat-display {
     margin: 1em 0em;
 }
 
@@ -219,14 +219,15 @@ body {
     border-bottom: 1px solid rgba(0,0,0,0.15);
     cursor: pointer;
     color: #7e7e7e;
-    padding-left: 0.5em;
-    padding-right: .5em;
+    padding: .3em .5em .3em .5em;
+    height: 4.5em;
+    margin-bottom: .1em;
 }
 
 .chat-item:hover {
-    /*color: rgba(0,0,0,0.15);*/
-    color:black;
+    /*color:black;*/
     transition: all .23s ease-in-out;
+    background-color: #e2e0e0;
 }
 
 .chat-list .guest-name {
@@ -234,8 +235,13 @@ body {
     font-weight: bold;
 }
 
-.chat-list .dt, .chat-list .guest-text {
-    font-size: .7em;
+.guest-name, .guest-text  {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.chat-list .guest-text {
     font-size: small;
 }
 
@@ -243,6 +249,18 @@ body {
     color:#66757f;
 }
 
+.guest-name {
+    width: 17em;
+}
+
+.guest-text {
+    width: 19em;
+    line-height: 2em;
+}
+
+.dt {
+    font-size: .7em;
+}
 .conversation {
     margin-left: .6em;
 }

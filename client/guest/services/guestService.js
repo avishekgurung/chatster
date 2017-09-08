@@ -19,6 +19,7 @@ App.factory('GuestService', ['$http', '$rootScope', function($http, $rootScope) 
             console.log('SOCKET OPENED');
             socket.on(guestId, function(message) {
                 $rootScope.$apply(function(){
+                    $rootScope.unread = true;
                     GuestService.conversation = Utility.addConversation(GuestService.conversation, message.text, 'him');
                 })
             })

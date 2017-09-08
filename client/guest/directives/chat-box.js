@@ -2,7 +2,7 @@
  * Created by avishek on 5/23/17.
  */
 
-App.directive("chatBox", ['GuestService', '$rootScope', function(GuestService) {
+App.directive("chatBox", ['GuestService', '$rootScope', function(GuestService, $rootScope) {
     return {
         templateUrl : "guest/views/chatBox.html",
         link : function(scope, elements, attributes) {
@@ -16,12 +16,12 @@ App.directive("chatBox", ['GuestService', '$rootScope', function(GuestService) {
             scope.$watch(function() {
                 return GuestService.agent;
             }, function() {
-                console.log('GuestService changed');
                 scope.serverReponse = GuestService.agent ? 1 : 2;
                 scope.agent = GuestService.agent;
             }, true);
 
             scope.change = function(event) {
+                $rootScope.unread = false;
                 var keyPressed = event.which;
                 if(keyPressed === 13) {
                     var text = scope.instance.text;
@@ -64,6 +64,7 @@ App.directive("chatBox", ['GuestService', '$rootScope', function(GuestService) {
                 scope.instance = {text : '', email: '', emailValid : true};
                 scope.text = '';
                 scope.agent = null;
+                $rootScope.unread = false;
                 GuestService.agent = null;
                 GuestService.close();
             }
