@@ -218,7 +218,6 @@ body {
 .chat-item {
     border-bottom: 1px solid rgba(0,0,0,0.15);
     cursor: pointer;
-    color: #7e7e7e;
     padding: .3em .5em .3em .5em;
     height: 4.5em;
     margin-bottom: .1em;
@@ -231,8 +230,7 @@ body {
 }
 
 .chat-list .guest-name {
-    font-size: .9em;
-    font-weight: bold;
+    font-size: 1em;
 }
 
 .guest-name, .guest-text  {
