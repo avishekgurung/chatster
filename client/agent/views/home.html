@@ -2,7 +2,7 @@
     <div class="head">
         <div class="head-container">
             <div class="nav-pic">
-                <img src="/public/images/dp.jpg">
+                <img src="/public/images/avatar/dp.jpg">
             </div>
             <div class="nav-user">
                 {{agent.name}}
@@ -20,10 +20,10 @@
             <div class="col-sm-3 chat-list" ng-class="{'show-scroll-bar':scrollList, 'hide-scroll-bar' : !scrollList}" ng-mouseover="scrollList=true" ng-mouseleave="scrollList=false" ng-init="scrollList=false">
                 <div class="chat-list-inset">
                     <div class="list-head">Messages</div>
-                    <div class="chat-item" ng-class="{'highlight':chat.selected}" ng-repeat="chat in chatList | orderBy:'epoch':true" ng-click="getChatDetails(chat.guestId)">
+                    <div class="chat-item" ng-class="{'highlight':chat.selected, 'message-blink' : chat.unread}" ng-repeat="chat in chatList | orderBy:'epoch':true" ng-click="getChatDetails(chat.guestId)">
                         <div>
-                            <span class="guest-name"> {{chat.guestEmail}} </span>
-                            <span class="dt pull-right">{{makeDate(chat.epoch)}}</span>
+                            <span class="guest-name">{{chat.guestEmail}} </span>
+                            <span class="dt pull-right" am-time-ago="chat.epoch"></span>
                         </div>
                         <div class="guest-text">{{chat.text}}</div>
                     </div>

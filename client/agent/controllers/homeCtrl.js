@@ -33,6 +33,7 @@ App.controller('homeCtrl', ['$rootScope', '$location', '$scope', 'Auth', 'ChatSe
             ChatService.Guest[prevGuestId].header.selected = false;
         }
         ChatService.Guest[guestId].header.selected = true;
+        ChatService.Guest[guestId].header.unread = false;
         prevGuestId = guestId;
 
         if(ChatService.Guest[guestId].conversation.length !==0 ) {
@@ -47,6 +48,7 @@ App.controller('homeCtrl', ['$rootScope', '$location', '$scope', 'Auth', 'ChatSe
             })
         }
         $scope.currentGuest = ChatService.Guest[$scope.guestId];
+        $rootScope.currentGuest = ChatService.Guest[$scope.guestId];
         $scope.guestPic = "/public/images/avatar/" + ChatService.Guest[guestId].guestEmail[0] + ".png";
     }
 
@@ -74,7 +76,6 @@ App.controller('homeCtrl', ['$rootScope', '$location', '$scope', 'Auth', 'ChatSe
             $scope.currentGuest = ChatService.Guest[$scope.guestId];
 
         }
-        console.log($scope.chatList);
         $timeout(function () {
             var obj = document.getElementById('convrplay');
             obj.scrollTop =  obj.scrollHeight + 100;

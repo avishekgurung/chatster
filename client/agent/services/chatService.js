@@ -22,7 +22,7 @@ App.service('ChatService', ['$rootScope', '$http','$timeout', function( $rootSco
                     var selected = false;
                     if(message.name) {
                         receiveFirst(message.from, message.to, message.text, message.name, message.pic, message.guestEmail);
-                        selected = true;
+                        //selected = true;
                     }
                     else {
                         receive(message.from, message.text);
@@ -42,13 +42,23 @@ App.service('ChatService', ['$rootScope', '$http','$timeout', function( $rootSco
     function makeHeader(from, text, guestId, selected) {
         var isSupport = !!$rootScope.agent;
         if(isSupport) {
+            var unread = false;
+            if($rootScope.currentGuest.header.guestId !== guestId && from.indexOf('JUVENIK') !== -1) {
+                unread = true;
+            }
+
+            if($rootScope.currentGuest.header.guestId === guestId) {
+                selected = true;
+            }
+
             var header =  {
                 guestId : guestId,
                 type : from.indexOf('JUVENIK') !== -1 ? 'him' : 'you',
                 text : text,
                 epoch : new Date().getTime(),
                 selected: selected,
-                guestEmail : Guest[guestId].guestEmail
+                guestEmail : Guest[guestId].guestEmail,
+                unread : unread
             }
             Guest[guestId].header = header;
             Guest[guestId].updated = true;
@@ -233,7 +243,8 @@ App.service('ChatService', ['$rootScope', '$http','$timeout', function( $rootSco
                         "text": item.text,
                         "epoch": item.epoch,
                         selected : selected,
-                        guestEmail : item.guestEmail
+                        guestEmail : item.guestEmail,
+                        unread : false
                     }
                 }
             }

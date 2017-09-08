@@ -1,7 +1,7 @@
 /**
  * Created by avishek on 7/17/17.
  */
-var App = angular.module('agent', ['ngRoute']);
+var App = angular.module('agent', ['ngRoute', 'angularMoment']);
 
 App.run(['$rootScope', '$location', 'Auth', '$http', 'AuthToken', 'ChatService', '$window', function($rootScope, $location, Auth, $http, AuthToken, ChatService, $window) {
     var pageReload = true;
