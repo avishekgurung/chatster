@@ -17,7 +17,7 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-sm-3 chat-list" ng-class="{'show-scroll-bar':scrollList, 'hide-scroll-bar' : !scrollList}" ng-mouseover="scrollList=true" ng-mouseleave="scrollList=false" ng-init="scrollList=false">
+            <div id="infinite-scroll" class="col-sm-3 chat-list" ng-class="{'show-scroll-bar':scrollList, 'hide-scroll-bar' : !scrollList}" ng-mouseover="scrollList=true" ng-mouseleave="scrollList=false" ng-init="scrollList=false">
                 <div class="chat-list-inset">
                     <div class="list-head">Messages</div>
                     <div class="chat-item" ng-class="{'highlight':chat.selected, 'message-blink' : chat.unread}" ng-repeat="chat in chatList | orderBy:'epoch':true" ng-click="getChatDetails(chat.guestId)">

@@ -84,7 +84,7 @@ function getChatList(userId, res, pageNum) {
             res.status(500).json({message: 'Error in internal query'});
         }
         else {
-            if(chatList.length <= offset) finish = true;
+            if(chatList.length < offset) finish = true;
             res.json({ success : true, chatList : chatList, finish : finish});
         }
     })

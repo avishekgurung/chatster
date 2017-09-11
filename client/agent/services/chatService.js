@@ -220,16 +220,19 @@ App.service('ChatService', ['$rootScope', '$http','$timeout', function( $rootSco
     }*/
 
     function makeChatDict(pageNum) {
+        if($rootScope.finishInfiniteScroll) { //when pagination is over
+            return;
+        }
         pageNum = pageNum || 0;
         var agentId = $rootScope.agent._id;
         if(!agentId) return;
         $http.get('/api/chatList?userId=' + agentId + "&pageNum=" + pageNum).then(function(res) {
             var items = res.data.chatList;
+            $rootScope.finishInfiniteScroll = res.data.finish;
             for(var i=0; i < items.length; i++) {
                 var item = items[i];
                 var id = item.from;
                 var selected = false;
-                //if(i === 0) selected = true;
                 if(item.to.indexOf('JUVENIK') !== -1) {
                     id = item.to;
                 }

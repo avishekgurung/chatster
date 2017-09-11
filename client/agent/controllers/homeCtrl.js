@@ -2,7 +2,7 @@
  * Created by avishek on 6/3/17.
  */
 
-App.controller('homeCtrl', ['$rootScope', '$location', '$scope', 'Auth', 'ChatService', '$http', '$location', '$anchorScroll','$timeout', function($rootScope, $location, $scope, Auth, ChatService, $http, $location, $anchorScroll, $timeout) {
+App.controller('homeCtrl', ['$rootScope', '$location', '$scope', 'Auth', 'ChatService', '$http', '$location', '$anchorScroll','$timeout', '$window', function($rootScope, $location, $scope, Auth, ChatService, $http, $location, $anchorScroll, $timeout, $window) {
 
     console.log('homeCtrl');
     var prevGuestId = null;
@@ -83,5 +83,19 @@ App.controller('homeCtrl', ['$rootScope', '$location', '$scope', 'Auth', 'ChatSe
     }, true);
 
     $scope.makeDate = Valid.makeDate;
+
+
+    //Infinite scroll implementations
+    $scope.infiniteRequestSent = false;
+    var pageNum = 1;
+    var element = document.getElementById('infinite-scroll');
+    var wrappedElement = angular.element(element);
+    wrappedElement.bind('scroll', function() {
+        if((element.scrollTop + element.clientHeight) == element.scrollHeight) {
+            console.log('Paginating');
+            ChatService.makeChatDict(pageNum);
+            pageNum++;
+        }
+    })
 
 }]);
