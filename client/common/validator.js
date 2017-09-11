@@ -52,13 +52,19 @@ var Valid = (function () {
         return 	day + ", " + hours + ":" + minutes + " on " + dt + "/" + month + "/" + year;
     }
 
+    function playChatSound() {
+        var audio = new Audio('/public/sound/facebook.mp3');
+        audio.play();
+    }
+
     return  {
         name : name,
         email : email,
         password : password,
         array : array,
         sleep : sleep,
-        makeDate : makeDate
+        makeDate : makeDate,
+        playChatSound : playChatSound
     }
 
 })();

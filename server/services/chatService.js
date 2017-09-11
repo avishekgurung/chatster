@@ -72,15 +72,20 @@ function makeChatList(chatList) {
 }
 
 //should give the partner name, pic, _id along with a single line of latest message
-function getChatList(userId, res) {
-    //var query = Chat.find({$or : [ { from : userId }, { to : userId}]}).sort({ date : -1 });
-    var query = ChatList.find({$or: [{ from: userId }, { to: userId }]}).sort({ date : -1}).limit(10);
+function getChatList(userId, res, pageNum) {
+    pageNum = pageNum || 0;
+    var offset = 10;
+    var skipset = 10 * pageNum;
+    var query = ChatList.find({$or: [{ from: userId }, { to: userId }]}).sort({ date : -1}).limit(10).skip(skipset);
+    var finish = false;
+
     query.exec(function(err, chatList) {
         if(err) {
             res.status(500).json({message: 'Error in internal query'});
         }
         else {
-            res.json({ success : true, chatList : chatList});
+            if(chatList.length <= offset) finish = true;
+            res.json({ success : true, chatList : chatList, finish : finish});
         }
     })
 }

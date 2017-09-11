@@ -19,6 +19,7 @@ App.service('ChatService', ['$rootScope', '$http','$timeout', function( $rootSco
             console.log('SOCKET OPENED');
             socket.on(agentId, function(message) {
                 $rootScope.$apply(function(){
+                    Valid.playChatSound();
                     var selected = false;
                     if(message.name) {
                         receiveFirst(message.from, message.to, message.text, message.name, message.pic, message.guestEmail);
@@ -33,7 +34,7 @@ App.service('ChatService', ['$rootScope', '$http','$timeout', function( $rootSco
 
             //populate chat list too
             if(Object.keys(ChatService.Guest).length === 0) {
-                ChatService.makeChatDict();
+                ChatService.makeChatDict(0);
             }
         })
     }
@@ -43,11 +44,11 @@ App.service('ChatService', ['$rootScope', '$http','$timeout', function( $rootSco
         var isSupport = !!$rootScope.agent;
         if(isSupport) {
             var unread = false;
-            if($rootScope.currentGuest.header.guestId !== guestId && from.indexOf('JUVENIK') !== -1) {
+            if($rootScope.currentGuest && $rootScope.currentGuest.header.guestId !== guestId && from.indexOf('JUVENIK') !== -1) {
                 unread = true;
             }
 
-            if($rootScope.currentGuest.header.guestId === guestId) {
+            if($rootScope.currentGuest && $rootScope.currentGuest.header.guestId === guestId) {
                 selected = true;
             }
 
@@ -113,7 +114,7 @@ App.service('ChatService', ['$rootScope', '$http','$timeout', function( $rootSco
         var conversation = Guest[to]['conversation'];
         Utility.addConversation(conversation, text, 'you');
         makeHeader($rootScope.agent._id, text, to, true);
-        emit({to : to, from : $rootScope.agent._id, text : text});
+        emit({to : to, from : $rootScope.agent._id, text : text, guestEmail : Guest[to]['guestEmail']});
     }
 
 
@@ -218,10 +219,11 @@ App.service('ChatService', ['$rootScope', '$http','$timeout', function( $rootSco
         return chatList;
     }*/
 
-    function makeChatDict() {
+    function makeChatDict(pageNum) {
+        pageNum = pageNum || 0;
         var agentId = $rootScope.agent._id;
         if(!agentId) return;
-        $http.get('/api/chatList?userId=' + agentId).then(function(res) {
+        $http.get('/api/chatList?userId=' + agentId + "&pageNum=" + pageNum).then(function(res) {
             var items = res.data.chatList;
             for(var i=0; i < items.length; i++) {
                 var item = items[i];

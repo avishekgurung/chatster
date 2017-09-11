@@ -39,7 +39,8 @@ api.get('/test', function(req, res) {
 //a list of chats
 api.get('/chatList', function(req, res) {
     var userId = req.body.userId || req.param('userId');
-    ChatService.getChatList(userId, res);
+    var pageNum = req.body.pageNum || req.param('pageNum');
+    ChatService.getChatList(userId, res, pageNum);
 })
 
 //details of converstation

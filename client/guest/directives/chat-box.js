@@ -64,13 +64,16 @@ App.directive("chatBox", ['GuestService', '$rootScope', function(GuestService, $
                 scope.instance = {text : '', email: '', emailValid : true};
                 scope.text = '';
                 scope.agent = null;
-                $rootScope.unread = false;
                 GuestService.agent = null;
                 GuestService.close();
             }
 
             scope.cancel = function() {
                 scope.showAlert = false;
+            }
+
+            scope.anyClick = function() {
+                $rootScope.unread = false;
             }
         }
     }

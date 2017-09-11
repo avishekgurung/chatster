@@ -248,7 +248,7 @@ body {
 }
 
 .guest-name {
-    width: 17em;
+    width: 16em;
 }
 
 .guest-text {
@@ -379,7 +379,7 @@ body {
 
 .message-blink {
     color: #0084B4;
-    background-color: #cfd4d8;
+    background-color: #badaf3;
 }
 
 /*.message-blink {

@@ -2,3 +2,9 @@
 
 2. Sending message does not go the bottom. -> DONE
     https://stackoverflow.com/questions/26343832/scroll-to-bottom-in-chat-box-in-angularjs
+
+3. Sometimes, the message is sent three times. It normally happens when in debug mode in the server side
+
+4. Message sent from different guest but same browser. When page refreshed in agent, same guest email appears.
+
+5. Connection.count sometimes goes haywired

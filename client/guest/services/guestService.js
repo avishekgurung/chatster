@@ -19,6 +19,7 @@ App.factory('GuestService', ['$http', '$rootScope', function($http, $rootScope) 
             console.log('SOCKET OPENED');
             socket.on(guestId, function(message) {
                 $rootScope.$apply(function(){
+                    Valid.playChatSound();
                     $rootScope.unread = true;
                     GuestService.conversation = Utility.addConversation(GuestService.conversation, message.text, 'him');
                 })
@@ -72,7 +73,7 @@ App.factory('GuestService', ['$http', '$rootScope', function($http, $rootScope) 
     //sending message to agent
     function send(text) {
         GuestService.conversation = Utility.addConversation(GuestService.conversation, text, 'you');
-        emit({from : GuestService.guest._id, to : GuestService.agent._id, text : text});
+        emit({from : GuestService.guest._id, to : GuestService.agent._id, text : text, guestEmail:GuestService.guest.email});
     }
 
     GuestService.initiate = initiate;
