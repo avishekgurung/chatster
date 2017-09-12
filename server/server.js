@@ -78,7 +78,13 @@ io.on('connection', function(socket) {
     socket.on('disconnect', function() {
         console.log('Disconnected with ' + socketId);
         if(socket.userId.indexOf('JUVENIK') !== -1) { //guest disconnect
-            Connection.update({userId : peerId}, { $inc : {count : -1}}, function(err, doc) {});
+            Connection.findOne({userId:peerId}, function(err, connection) {
+                if(connection) {
+                    if(connection.count > 0) {
+                        Connection.update({userId : peerId}, { $inc : {count : -1}}, function(err, doc) {});
+                    }
+                }
+            });
             var guestId = socket.userId;
             redis.get(guestId, function(err, message) {
                 if(!err && message) {

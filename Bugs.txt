@@ -7,4 +7,4 @@
 
 4. Message sent from different guest but same browser. When page refreshed in agent, same guest email appears.
 
-5. Connection.count sometimes goes haywired
+5. Connection.count sometimes goes haywired. Make few guest connections. Close the agent window, now close the guest window. THe connection count will be in negative.

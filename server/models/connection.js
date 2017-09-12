@@ -25,7 +25,8 @@ var ConnectionSchema = new Schema({
     },
 
     count : {
-        type : Number
+        type : Number,
+        min:0 //validation does not work on update
     }
 });
 
