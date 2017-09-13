@@ -9,8 +9,8 @@ App.config(function($routeProvider, $locationProvider) {
             controller : 'homeCtrl'
         })
 
-        .when('/home', {
-            templateUrl: 'agent/agent.html',
+        .when('/agent/home', {
+            templateUrl: 'agent/views/home.html',
             controller : 'homeCtrl'
         })
 

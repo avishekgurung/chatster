@@ -1,12 +1,41 @@
 <div>
-    <div class="page-header">
-        <h1>Profile</h1>
-    </div>
-    <div class="row">
-        <div class="col-sm-4 col-sm-offset-4">
-            Welcome {{user.name}}
+    <div class="head">
+        <div class="head-container">
+            <div class="nav-pic">
+                <img src="/public/images/profile/leo.jpg">
+            </div>
+            <div class="nav-user">
+                <a href="/agent/home">{{agent.name}}</a>
+            </div>
+            <div class="nav-msg" ng-href="/">
+                <a href="/">Message</a>
+            </div>
+            <div class="nav-title">
+                Chatster
+            </div>
         </div>
-        <a href="/">Home</a>
-        <span class="pull-right" ng-click='logout()'>Logout</span>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3 chat-list profile">
+                <div class="img-container">
+                    <img src="/public/images/profile/leo.jpg">
+                </div>
+                <div class="view-detail">
+                    <div class="name">
+                        {{agent.name}}
+                    </div>
+                    <div class="email">
+                        {{agent.email}}
+                    </div>
+                    <div class="role">
+                        {{agent.role}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-7 conversation">
+
+            </div>
+        </div>
     </div>
 </div>

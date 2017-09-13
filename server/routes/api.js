@@ -175,7 +175,7 @@ api.post('/login', function(req, res) {
             return;
         }
         var token = createToken(user);
-        var obj = { _id : user._id, name : user.name, email : user.email};
+        var obj = { _id : user._id, name : user.name, email : user.email, role : user.role};
         res.json({
             success : true,
             message : 'Successful login',

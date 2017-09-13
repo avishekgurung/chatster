@@ -382,6 +382,25 @@ body {
     background-color: #badaf3;
 }
 
+.profile .img-container {
+    margin-top: 1em;
+    padding: 1em 0em;
+    width: 16.5em;
+}
+.profile img {
+    border-radius: 50%;
+    height: 13em;
+    width: 13em;
+    margin: auto;
+    display: block;
+}
+
+.profile .view-detail {
+    background-color: #e6ecf0;
+    height: 18em;
+    border-radius: .3em;
+}
+
 /*.message-blink {
     color: #0084B4;
     -webkit-animation: NAME-YOUR-ANIMATION 1s 1;  !* Safari 4+ *!
